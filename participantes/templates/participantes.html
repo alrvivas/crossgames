@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}
+<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+	<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+	<div class="cross-card-container mdl-grid">
+		{% for p in participantes %}
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+          	<div class="mdl-card__media">
+           		<a class="text-decoration"  href="{{p.get_absolute_url}}"><img src="{{p.imagen.url}}" /></a>
+          	</div>
+          	<div class="mdl-card__title">
+            	 	<a class="text-decoration"  href="{{p.get_absolute_url}}"><h4 class="mdl-card__title-text">{{p.nombre}} {{p.apellidos}}</h4></a>
+          	</div>
+          	<div class="mdl-card__supporting-text">
+            	<span class="mdl-typography--font-light mdl-typography--subhead">Desde {{p.ciudad}}, {{p.estado}}</span>
+          	</div>	              
+        </div> 
+        {% endfor %}           	
+  	</div>					
+</div>
+{% endblock %}	
+

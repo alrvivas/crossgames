@@ -1,0 +1,31 @@
+{% load static from staticfiles %} 
+<!DOCTYPE html>
+<html lang="es_mx">
+<head>
+{% include "head.html" %}
+{% block staticos %}{% endblock %}
+</head>
+<body class="mdl-color--grey-900">
+	<div class="mdl-layout mdl-js-layout">
+		<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--grey-900 mdl-color-text--amber-500">
+			<div class="mdl-layout__header-row">
+			      <!-- Title -->
+		      	<span class="mdl-layout-title">
+			      	<img class="logo" src="{% static 'imagenes/wodapp-logo.png' %}" style="height: 60px;" />
+		      	</span>
+		      	<!-- Add spacer, to align navigation to the right -->
+		      	<div class="mdl-layout-spacer"></div>
+		      	<!-- Navigation -->
+		      	<nav class="mdl-navigation">		        
+		      	</nav>
+		    </div>
+  		</header>
+		{% block header %}{% endblock %} 
+		{% include "menu.html" %}
+        {% block contedor %}{% endblock %}
+        {% block footer %}{% endblock %}					
+	</div>
+	{% include "scripts.html" %}
+    {% block adicional-scripts %}{% endblock %}	
+</body>
+</html>

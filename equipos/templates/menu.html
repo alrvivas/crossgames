@@ -1,0 +1,19 @@
+{% load static from staticfiles %}
+<div class="mdl-layout__drawer">
+    <span class="mdl-layout-title"><img class="logo" src="{% static 'imagenes/wodapp-logo.png' %}" style="height: 50px;" /></span>
+    <nav class="mdl-navigation mdl-color-text--amber-500">
+    	<a class="mdl-navigation__link" href="{% url 'index' %}">Inicio</a>
+        {% if user.is_staff %}
+      	    <a class="mdl-navigation__link" href="{% url 'registro-equipo' %}">Registro de Equipos</a>
+            <a class="mdl-navigation__link" href="{% url 'registro-participantes' %}">Registro de Participantes</a>
+            <a class="mdl-navigation__link" href="{% url 'registro-ejercicios' %}">Alta de Ejercicios</a>
+            <a class="mdl-navigation__link" href="{% url 'registro-eventos' %}">Registro de Eventos</a>
+            <a class="mdl-navigation__link" href="{% url 'registro-hits' %}">Registro de Hits</a>
+        {% endif %}
+        <a class="mdl-navigation__link" href="{% url 'hits' %}">Hits</a>    
+        <a class="mdl-navigation__link" href="{% url 'equipos' %}">Equipos</a>
+        <a class="mdl-navigation__link" href="{% url 'participantes' %}">Participantes</a>
+        <a class="mdl-navigation__link" href="{% url 'ejercicios' %}">Ejercicios</a>
+        <a class="mdl-navigation__link" href="{% url 'tabla-general' %}">Tabla General</a>
+    </nav>
+</div>

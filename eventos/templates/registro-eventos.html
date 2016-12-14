@@ -1,0 +1,72 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}
+	<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+		<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-typography--text-left">
+				<form action="" method="post" role="form" class="mdl-grid form-add" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">    			
+			    		<input class="mdl-textfield__input mdl-textfield--align-left" id="nombre" name="nombre" type="text"  tabindex="1" required="required" />
+			    		<label class="mdl-textfield__label mdl-color-text--amber-500" for="nombre">Nombre</label>				    		  	
+		  			</div>
+		  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
+					    <input class="mdl-textfield__input" type="date" name="fecha" id="fecha" value="" tabindex="2" required="required" />
+					    <label class="mdl-textfield__label" for="fecha">Fecha Del Evento</label>
+				  	</div>
+		  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--4-col">    			
+			    		<input class="mdl-textfield__input mdl-textfield--align-left" id="tiempo" name="tiempo" type="text"  tabindex="3" required="required" />
+			    		<label class="mdl-textfield__label mdl-color-text--amber-500" for="tiempo">Tiempo</label>				    		  	
+		  			</div>
+		  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--4-col">    			
+			    		<input class="mdl-textfield__input mdl-textfield--align-left" id="repeticiones" name="repeticiones" type="text"  tabindex="4" required="required" />
+			    		<label class="mdl-textfield__label mdl-color-text--amber-500" for="repeticiones">Repeticiones</label>				    		  	
+		  			</div>
+		  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--4-col">    			
+			    		<input class="mdl-textfield__input mdl-textfield--align-left" id="peso" name="peso" type="text"  tabindex="5" required="required" />
+			    		<label class="mdl-textfield__label mdl-color-text--amber-500" for="peso">Peso</label>				    		  	
+		  			</div>
+		  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
+						    <textarea class="mdl-textfield__input" type="text" name="descripcion" id="descripcion" tabindex="6" ></textarea>
+						    <label class="mdl-textfield__label mdl-color-text--amber-500" for="descripcion">Descripción</label>
+					  	</div>
+		  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--file mdl-cell--12-col">
+					    <input class="mdl-textfield__input" placeholder="Imagen" type="text" id="uploadFile" readonly/>
+					    <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
+					     	<i class="material-icons mdl-color-text--amber-500">add_a_photo</i>
+					     	<input type="file" name="imagen" id="uploadBtn">
+					    </div>
+				  	</div>
+		  			<div class="mdl-cell--12-col mdl-textfield--align-right">
+					   	<a href="{% url 'eventos' %}" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-100">
+						  	CANCELAR
+						</a>				   		
+				  		<button class="mdl-button mdl-js-button  mdl-js-ripple-effect mdl-button--primary mdl-color-text--amber-500">
+						  	GUARDAR
+						</button>
+			    	</div>
+				</form>					
+			</div>					
+		</div>					
+	</div>	
+{% endblock %}
+{% block adicional-scripts %}
+<script type="text/javascript">
+	document.getElementById("uploadBtn").onchange = function () {
+		document.getElementById("uploadFile").value = this.files[0].name;
+	};
+</script>
+<script type="text/javascript">
+	var d = new Date();
+	var month_inicio = d.getMonth()+1;
+	var day_inicio = d.getDate();
+
+	var fecha = d.getFullYear() + '-' +
+	    ((''+month_inicio).length<2 ? '0' : '') + month_inicio + '-' +
+	    ((''+day_inicio).length<2 ? '0' : '') + day_inicio;
+
+	$('#fecha').val(fecha);
+</script>
+{% endblock %}	

@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block header %}
+	<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--grey-900 mdl-color-text--amber-500">
+		<div class="mdl-layout__header-row">
+		      <!-- Title -->
+		      <span class="mdl-layout-title">Iron Squad The Challenge</span>
+		      <!-- Add spacer, to align navigation to the right -->
+		      <div class="mdl-layout-spacer"></div>
+		      <!-- Navigation -->
+		      <nav class="mdl-navigation">		        
+		      </nav>
+	    </div>
+  	</header>
+{% endblock %} 
+{% block contedor %}
+	<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+		<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone "></div>
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--10-col-phone mdl-typography--text-left">
+					<form action="" method="post" role="form" class="mdl-grid form-add">
+					{% csrf_token %}	
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">    			
+				    		<input class="mdl-textfield__input mdl-textfield--align-left" id="username" name="username" type="text"  tabindex="1" required="required" />
+				    		<label class="mdl-textfield__label mdl-color-text--amber-500" for="username">Usuario</label>				    		  	
+			  			</div>
+			  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">    			
+				    		<input class="mdl-textfield__input mdl-textfield--align-left" id="password" name="password" type="password"  tabindex="2" value="Evento 1 -Hit 1" required="required" />
+				    		<label class="mdl-textfield__label mdl-color-text--amber-500" for="password">Contraseña</label>				    		  	
+			  			</div>			  									
+			  			<div class="mdl-cell--12-col mdl-textfield--align-right">
+						   	<!--<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-100">
+							  	CANCELAR
+							</a>-->				   		
+					  		<button class="mdl-button mdl-js-button  mdl-js-ripple-effect mdl-button--primary mdl-color-text--amber-500">
+							  	INGRESAR
+							</button>
+				    	</div>
+					</form>
+				</div>
+				<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone "></div>				
+			</div>					
+	</div>	
+{% endblock %} 

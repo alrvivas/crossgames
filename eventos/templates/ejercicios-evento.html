@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}
+<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+	<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+	<div class="cross-card-container mdl-grid">
+    {% for e in ejercicios %}
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-tablet mdl-cell--12-col-phone demo-card-event mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand mdl-typography--text-left" style="background-image: url('{{e.ejercicio.imagen.url}}');background-size: cover;background-repeat: no-repeat;">
+          <h4 class="mdl-text__shadow--2dp">              
+              {% if e.repeticiones > 0 %}
+                {{e.repeticiones}} - {{e.ejercicio.nombre}}<br />
+              {% else %}
+                {{e.ejercicio.nombre}}<br />
+              {% endif %}
+              {% if e.peso_1 > 0 and e.peso_2 > 0 %}
+                {{e.peso_1|floatformat:2}}Lbs / {{e.peso_2|floatformat:2}}Lbs<br />
+              {% endif %}
+          </h4>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Dificultad {{e.ejercicio.dificultad}} - {{e.ejercicio.descripcion|truncatewords:10}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a href="{{e.ejercicio.get_absolute_url}}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Ver ejercicio
+          </a>
+        </div>
+    </div>
+    {% endfor %}            
+  </div>					
+</div>
+{% endblock %}	
+

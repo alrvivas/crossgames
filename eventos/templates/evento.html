@@ -1,0 +1,57 @@
+{% extends "base.html" %} 
+{% load static from staticfiles %}
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}
+<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+	<div class="cross-title cross-team ">{{page_title}} 
+		{% if user.is_staff %}
+		 	::
+			<a href="{{evento.registro_ejercicios_evento}}" class="mdl-color-text--amber-500">
+				<i id="add" class="material-icons">add_circle_outline</i>
+			</a>
+		{% endif %}
+	</div>
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-typography--text-center">			
+			<a href="{{evento.get_ejercicios}}" class="mdl-color-text--amber-500"><i id="equipo" class="material-icons font-9 icon-botton-left">fitness_center</i></a>
+			
+		</div>
+		<div class="mdl-cell mdl-cell--6-col mdl-cell--10-col-tablet mdl-cell--10-col-phone cross-title cross-porcent sport ">
+			<img class="mdl-cell--12-col" src="{{evento.imagen.url}}" />
+		</div>
+		<div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-typography--text-center">
+			<a href="{% url 'ejercicios' %}" class="mdl-color-text--amber-500"><i id="rendimiento" class="material-icons font-9 icon-botton-right">whatshot</i></a>
+		</div>	
+	</div>	
+</div>
+<div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--top" for="add">
+	Añadir Ejercicios
+</div>
+<div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--top" for="equipo">
+	Ejercicios
+</div>
+<div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--top" for="rendimiento">
+	Participantes
+</div>
+{% endblock %}
+{% block adicional-scripts %}
+<script type="text/javascript" src="{% static 'js/jquery.countTo.js'%}"></script>
+<script type="text/javascript">
+ 	$('.porcent').countTo({
+	    from: 0,
+	    to: 100,
+	    speed: 2000,
+	    refreshInterval: 50,
+	    formatter: function (value, options) {
+      		return value.toFixed(options.decimals);
+    	},
+    	onUpdate: function (value) {
+      		console.debug(this);
+    	},
+    	onComplete: function (value) {
+      		console.debug(this);
+    	}
+  	});
+</script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}
+<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+	<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+	<div class="cross-card-container mdl-grid">
+    {% for e in ejercicios %}
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-tablet mdl-cell--12-col-phone demo-card-event mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand" style="background-image: url('{{e.imagen.url}}');background-size: cover;background-repeat: no-repeat;">
+          <h4 class="mdl-text__shadow--2dp">
+              {{e.nombre}}
+          </h4>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Dificultad {{e.dificultad}} - {{e.descripcion|truncatewords:10}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a href="{{e.get_absolute_url}}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Ver ejercicio
+          </a>
+        </div>
+    </div>
+    {% endfor %}            
+  </div>					
+</div>
+{% endblock %}	
+

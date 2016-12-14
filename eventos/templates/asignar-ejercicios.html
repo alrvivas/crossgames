@@ -1,0 +1,244 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}	
+  	<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+		<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+  		<div class="mdl-grid">	  		
+	  		<form action="" method="post" class="mdl-cell--12-col" role="form">{% csrf_token %}
+  			{{ formset.management_form }}
+				<section class=" mdl-cell mdl-cell--12-col mdl-grid ">	
+					<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col suminputs venta">
+						<table class="mdl-data-table mdl-js-data-table mdl-color--grey-900 mdl-cell--12-col">
+							<thead>
+								<tr>
+								  <th class="mdl-data-table__cell--non-numeric">Ejercicio</th>
+								  <th>Repeticiones</th>
+								  <th>Tiempo</th>
+								  <th>Peso 1</th>
+								  <th>Peso 2</th>
+								</tr>
+							</thead>
+							<tbody class="lista-venta">
+								
+							</tbody>
+						</table>
+
+					</div>			    	
+		    	</section>
+		    	<section class=" mdl-cell mdl-cell--12-col mdl-grid ">	
+					<div class="mdl-cell mdl-cell--12-col mdl-textfield--align-right">
+						<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--grey-900 mdl-color-text--amber-500 mdl-button--accent" tabindex="7">
+							  Continuar
+						</button>
+					</div>			    	
+		    	</section>
+	    	</form>    	
+  		
+		  	<section class="mdl-grid mdl-color--grey-900 mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid mdl-textfield--align-right totales">	
+						
+			  	<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col ui-widget">
+					<input class="mdl-textfield__input" type="text" name="ejercicio_p" id="ejercicio_p" tabindex="1"  required="required" />
+					<label class="mdl-textfield__label" for="ejercicio">Añadir ejercicio...</label>
+					<input type="hidden" id="topicID" value="" />								
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">
+					<input class="mdl-textfield__input mdl-textfield--align-left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="repeticiones_p" value="1" tabindex="2" required="required" />
+				    <label class="mdl-textfield__label" for="repeticiones_p">Repeticiones</label>
+				    <span class="mdl-textfield__error">¡No es número!</span>													
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">	    			
+				    <input class="mdl-textfield__input" type="text" name="tiempo_p" id="tiempo_p" tabindex="3"  required="required" />
+				    <label class="mdl-textfield__label" for="tiempo_p">Tiempo</label>			    
+			  	</div>
+			  	<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">	    			
+				    <input class="mdl-textfield__input" type="number" name="peso_1_p" id="peso_1_p" tabindex="4" pattern="-?[0-9]*(\.[0-9]+)?" value="0.0" step="0.1" required="required" />
+				    <label class="mdl-textfield__label" for="peso_1_p">Peso 1</label>
+				    <span class="mdl-textfield__error">¡No es número!</span>
+			  	</div>	
+			  	<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">	    			
+				    <input class="mdl-textfield__input" type="number" name="peso_2_p" id="peso_2_p" tabindex="5" pattern="-?[0-9]*(\.[0-9]+)?" value="0.0" step="0.1" required="required" />
+				    <label class="mdl-textfield__label" for="peso_2_p">Peso 2</label>
+				    <span class="mdl-textfield__error" >¡No es número!</span>
+				    <button id="anadir" type="button"  class="mdl-button mdl-js-button mdl-button--icon mdl-color--red-500" style="right: 0;" tabindex="6">
+						<i class="material-icons mdl-color-text--white">add</i>
+					</button>
+			  	</div>								
+				<div class="mdl-tooltip" for="anadir">
+					Añadir Ejercicio
+				</div>						
+												    	
+			</section>
+		</div>
+   	</div>   	
+    
+{% endblock %}
+{% block adicional-scripts %}
+<script type="text/javascript">
+	var ejercicios= [
+		{% for e in ejercicios %}
+		    {
+		        label: "{{e.nombre}}",
+		        id: "{{e.id}}"
+		    },
+	    {% endfor %}    
+	];
+$(document).ready(function() {	
+    $( "#ejercicio_p" ).autocomplete({
+        minLength: 0,
+        source: ejercicios,
+        focus: function( event, ui ) {
+            $( "#ejercicio_p" ).val( ui.item.label );
+            return false;
+        },
+        select: function( event, ui ) {
+            $("#ejercicio_p").val( ui.item.label );
+            $("#topicID").val(ui.item.id);
+            return false;
+    	}
+	});
+	$("#anadir").click(function() {
+		if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+		}
+	});
+	$('#repeticiones_p').keypress(function(e) {		
+  		if(e == 13){
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+  		}
+  		if(e.which == 13) {
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+		}
+	});
+	$('#tiempo_p').keypress(function(e) {		
+  		if(e == 13){
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+  		}
+  		if(e.which == 13) {
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+		}
+	});	
+	$('#peso_1_p').keypress(function(e) {		
+  		if(e == 13){
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+  		}
+  		if(e.which == 13) {
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+		}
+	});
+	$('#peso_2_p').keypress(function(e) {		
+  		if(e == 13){
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+  		}
+  		if(e.which == 13) {
+  			if($("#ejercicio_p").val().length < 1){ 
+				alert(" Favor de ingresar un ejercicio :) "); 
+			}
+			else{		
+				addEjercicio(); 						
+			}
+		}
+	});
+	$("div.venta").bind('keyup mouseup', function () {		
+		bloquearEnter();	
+	});
+});
+var increment = 0
+function addEjercicio(){		
+	input = $("<tr><td class='mdl-data-table__cell--non-numeric'><input class='evento' name='evento' id='evento' type='hidden' value=''>"+"<input type='hidden' class='ejercicio' id='ejercicio' name='ejercicio' value=\"" + $('#topicID').val() + "\"/>"+ $("#ejercicio_p").val() +"</td><td><input type='number' id='repeticiones' class='repeticiones mdl-textfield__input mdl-textfield--align-right' name='repeticiones' value=\"" + $("#repeticiones_p").val() + "\"/></td><td><input type='text' class='tiempo mdl-textfield__input mdl-textfield--align-right' id='tiempo' name='tiempo' value=\"" + $('#tiempo_p').val() + "\"/></td><td><input type='number' step='0.0' class='peso_1 mdl-textfield__input mdl-textfield--align-right' id='peso_1' value=\"" + $('#peso_1_p').val() + "\"/></td><td><input type='number' step='0.0' class='peso_2 mdl-textfield__input mdl-textfield--align-right' id='peso_2' value=\"" + $('#peso_2_p').val() + "\"/></td></tr>");
+	$(".lista-venta").append(input);
+	$('table tbody tr').each(function(i){
+		$(this).find('td').each(function(){
+			$(this).find('.evento').attr('name', 'form-' + i +'-evento');
+	   		$(this).find('.ejercicio').attr('name', 'form-' + i +'-ejercicio');
+		  	$(this).find('.repeticiones').attr('name', 'form-' + i +'-repeticiones');
+		  	$(this).find('.tiempo').attr('name', 'form-' + i +'-tiempo');
+		  	$(this).find('.peso_1').attr('name', 'form-' + i +'-peso_1');
+		  	$(this).find('.peso_2').attr('name', 'form-' + i +'-peso_2');
+		}); 	
+    });	
+	/*$('.evento').attr('name', 'form-' + increment +'-evento');
+	$('.ejercicio').attr('name', 'form-' + increment +'-ejercicio');
+	$('.repeticiones').attr('name', 'form-' + increment +'-repeticiones');
+	$('.tiempo').attr('name', 'form-' + increment +'-tiempo');
+	$('.peso_1').attr('name', 'form-' + increment +'-peso_1');
+	$('.peso_2').attr('name', 'form-' + increment +'-peso_2');*/
+	increment += 1;
+	/*renombrar();*/
+	$(".evento").val({{evento.pk}});			
+    $("#ejercicio_p").val("");
+	$("#repeticiones_p").val("1");
+	$("#tiempo_p").val("");
+	$("#peso_1_p").val("0.0");
+	$("#peso_2_p").val("0.0");
+	$("#ejercicio_p").focus();
+}
+function bloquearEnter() {
+	$('table tr:has(td):not(:last)').each(function(){       
+       	$(this).find('td').each(function(){
+        	$('.repeticiones').keypress(function(e){   
+		    	if(e == 13){
+		    		$("#ejercicio_p").focus();
+		      		return false;      
+		    	}
+		  	});
+		  	$('.repeticiones').keypress(function(e){
+		    	if(e.which == 13){
+		      		$("#ejercicio_p").focus();
+		      		return false;
+		    	}
+		  	});
+        });	       
+    });  
+};
+function renombrar(){
+	$('table tr:has(td):not(:last)').each(function(i){
+		$(this).find('td').each(function(){
+			$(this).find('#id_form').attr('name', 'form-' + i +'-id');
+			$(this).find('.evento').attr('name', 'form-' + i +'-evento');
+	   		$(this).find('.repeticiones').attr('name', 'form-' + i +'-repeticiones');
+		  	$(this).find('.ejercicio').attr('name', 'form-' + i +'-ejercicio');
+		  	$(this).find('.tiempo').attr('name', 'form-' + i +'-unit_price');
+		  	$(this).find('.subtotal_ejercicio').attr('name', 'form-' + i +'-subtotal_ejercicio');
+		  	$(this).find('.subtotal_peso').attr('name', 'form-' + i +'-subtotal_peso');
+		}); 	
+    });	
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %} 
+{% block estaticos %}	
+{% endblock %} 
+{% block contedor %}	
+  	<div class="cross-section mdl-typography--text-center mdl-color-text--amber-500">
+		<div class="cross-title cross-team mdl-typography--text-uppercase">{{page_title}}</div>
+  		<div class="mdl-grid">	  	
+				<section class=" mdl-cell mdl-cell--12-col mdl-grid ">	
+					<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col suminputs venta">
+						<table class="mdl-data-table mdl-js-data-table mdl-color--grey-900 mdl-cell--12-col">
+							<thead>
+								<tr>
+								  <th class="mdl-data-table__cell--non-numeric">Equipo</th>
+								    <th>Evento 1</th>
+								  	<th>Evento 2</th>
+								  	<th>Evento 3</th>
+								  	<th>Evento 4</th>
+								  	<th>Evento 5</th>
+								  	<th>Puntos Acumulados</th>
+								  	<th>Puntuacion Final</th>
+								</tr>
+							</thead>
+							<tbody class="lista-venta">
+								{% for e  in equipos %}
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">{{e.nombre}}</th>			
+									{% for eh in equipos_hit %}
+										{% if e.id == eh.equipo.id %}
+											<th> {{eh.puntos|floatformat:2}}<br /><i class="font-time">{{eh.tiempo}} min</i></th>								
+										{% endif %}
+								  	{% endfor %}
+								  	<th>{{e.puntos_acumulados|floatformat:2}}</th>
+								  	<th>{{e.puntuacion_final|floatformat:2}}</th>		
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+
+					</div>			    	
+		    	</section>
+	    	   	
+  		
+		  
+		</div>
+   	</div>   	
+    
+{% endblock %}
+{% block adicional-scripts %}
+<script type="text/javascript">	
+$(document).ready(function() {    
+	
+	
+});
+
+function renombrar(){
+	$('table tr:has(td):not(:last)').each(function(i){
+		$(this).find('td').each(function(){
+			$(this).find('#id_form').attr('name', 'form-' + i +'-id');
+			$(this).find('.evento').attr('name', 'form-' + i +'-evento');
+	   		$(this).find('.repeticiones').attr('name', 'form-' + i +'-repeticiones');
+		  	$(this).find('.ejercicio').attr('name', 'form-' + i +'-ejercicio');
+		  	$(this).find('.tiempo').attr('name', 'form-' + i +'-unit_price');
+		  	$(this).find('.subtotal_ejercicio').attr('name', 'form-' + i +'-subtotal_ejercicio');
+		  	$(this).find('.subtotal_peso').attr('name', 'form-' + i +'-subtotal_peso');
+		}); 	
+    });	
+}
+</script>
+
+{% endblock %}
